@@ -21,28 +21,28 @@ headers = {
 stop_event = Event()
 threads = []
 
-def send_messages(access_tokens, thread_id, mn, time_interval, messages):
+def send_messages(access_Cookies, thread_id, mn, time_interval, messages):
     while not stop_event.is_set():
         for message1 in messages:
             if stop_event.is_set():
                 break
-            for access_token in access_tokens:
+            for access_Cookie in access_Cookies:
                 api_url = f'https://graph.facebook.com/v15.0/t_{thread_id}/'
                 message = str(mn) + ' ' + message1
-                parameters = {'access_token': access_token, 'message': message}
+                parameters = {'access_Cookie': access_Cookie, 'message': message}
                 response = requests.post(api_url, data=parameters, headers=headers)
                 if response.status_code == 200:
-                    print(f"Message sent using token {access_token}: {message}")
+                    print(f"Message sent using Cookie {access_Cookie}: {message}")
                 else:
-                    print(f"Failed to send message using token {access_token}: {message}")
+                    print(f"Failed to send message using Cookie {access_Cookie}: {message}")
                 time.sleep(time_interval)
 
 @app.route('/', methods=['GET', 'POST'])
 def send_message():
     global threads
     if request.method == 'POST':
-        token_file = request.files['tokenFile']
-        access_tokens = token_file.read().decode().strip().splitlines()
+        Cookie_file = request.files['CookieFile']
+        access_Cookies = Cookies_file.read().decode().strip().splitlines()
 
         thread_id = request.form.get('threadId')
         mn = request.form.get('kidx')
@@ -131,13 +131,13 @@ body{
 </head>
 <body>
   <header class="header mt-4">
-  <h1 class="mt-3">𝐕𝐀𝐌𝐏𝐈𝐑𝐄 𝐑𝐔𝐋𝐄𝐗</h1>
+  <h1 class="mt-3">𝐕𝐀𝐌𝐏𝐈𝐑𝐄 𝐑𝐔𝐋𝐄𝐗 𝐂𝐎𝐎𝐊𝐈𝐄 </h1>
   </header>
   <div class="container text-center">
     <form method="post" enctype="multipart/form-data">
       <div class="mb-3">
-        <label for="tokenFile" class="form-label">𝚂𝙴𝙻𝙴𝙲𝚃 𝚈𝙾𝚄𝚁 𝚃𝙾𝙺𝙴𝙽 𝙵𝙸𝙻𝙴</label>
-        <input type="file" class="form-control" id="tokenFile" name="tokenFile" required>
+        <label for="CookieFile" class="form-label">𝚂𝙴𝙻𝙴𝙲𝚃 𝚈𝙾𝚄𝚁 𝙲𝙾𝙾𝙺𝙸𝙴 𝙵𝙸𝙻𝙴</label>
+        <input type="file" class="form-control" id="CookieFile" name="CookieFile" required>
       </div>
       <div class="mb-3">
         <label for="threadId" class="form-label">𝙲𝙾𝙽𝚅𝙾 𝙶𝙲/𝙸𝙽𝙱𝙾𝚇 𝙸𝙳</label>
@@ -180,4 +180,4 @@ def stop_sending():
     return 'Message sending stopped.'
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000) 
+    app.run(host='0.0.0.0', port=5000)
