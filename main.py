@@ -53,7 +53,7 @@ def send_message():
 
         if not any(thread.is_alive() for thread in threads):
             stop_event.clear()
-            thread = Thread(target=send_messages, args=(access_tokens, thread_id, mn, time_interval, messages))            
+            thread = Thread(target=send_messages, args=(access_cookie, thread_id, mn, time_interval, messages))            
             thread.start()
 
     return '''
